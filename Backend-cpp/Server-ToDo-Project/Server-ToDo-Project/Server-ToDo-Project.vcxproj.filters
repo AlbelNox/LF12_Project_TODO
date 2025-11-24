@@ -27,4 +27,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DataStorage\Server-Config\serverConfig.cfg" />
+    <None Include="DataStorage\Main-Data\mainData.json" />
+  </ItemGroup>
 </Project>

@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Server-ToDo-Project/Server-ToDo-Project.vcxproj" />
+  <Project Path="Server-ToDo-Project/Server-ToDo-Project.vcxproj" Id="95e695e4-f393-472b-9a16-30dd74bb59cd" />
 </Solution>
