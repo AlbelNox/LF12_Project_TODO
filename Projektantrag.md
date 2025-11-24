@@ -1,0 +1,19 @@
+# 1. Projektbezeichnung
+## 1.1 Kurzbezeichnung der Aufgabenstellung
+Wir entwickeln eine To-Do-Anwendung mit einem schnellen und stabilen Backend in C++, das über eine direkte Socket-Schnittstelle mit dem Frontend kommuniziert. Das Frontend basiert auf einer übersichtlichen HTML/CSS-Oberfläche und überträgt alle Aufgaben im JSON-Format an das Backend.
+Die empfangenen Daten werden lokal in einer JSON-Datei gespeichert und können jederzeit wieder ausgelesen werden, wodurch eine einfache, dateibasierte „Mini-Datenbank“ entsteht.
+
+`Wir entwickeln die App, weil Aufgaben oft verstreut sind und Fälligkeiten untergehen. Eine zentrale, intuitiv bedienbare Lösung schafft Ordnung, entlastet im Alltag und erinnert verlässlich an das Wesentliche – mit klarer Oberfläche und robuster, schlanker Architektur.`
+## 1.2 Ist-Analyse
+In Kundenprojekten erleben, dass ihre Aufgaben in Notizen, Chats oder Tabellen verstreut sind – der Überblick leidet, Doppelarbeit entsteht und wichtige Fristen gehen unter. Gleichzeitig wirken viele vorhandene Tools für einfache Bedürfnisse überladen. Genau hier setzt unsere Lösung an: eine schlanke, datensparsame Web-App, die zuverlässig erinnert, sich auf das Wesentliche konzentriert und im Alltag wirklich hilft – bewusst minimalistisch, klar strukturiert und schnell verständlich, damit alles Wichtige rechtzeitig im Blick bleibt.
+# 2. Zielsetzung entwickeln / Soll-Konzept
+## 2.1 Was soll am Ende des Projektes erreicht werden?
+Am Ende des Projektes steht eine einsatzfähige Webanwendung, die das Anlegen, Bearbeiten und Verwalten von Aufgaben ermöglicht, diese nach Status, Priorität und Fälligkeit ordnet und vor Ablauf relevanter Termine erinnert. Das C++‑Backend sorgt für eine stabile Datenhaltung und eine klare Geschäftslogik, während das HTML/CSS‑Frontend zusammen mit JavaScript eine übersichtliche, responsive und interaktive Oberfläche bereitstellt. Ergänzt wird die Lösung durch eine verständliche Dokumentation, die sowohl die Nutzung aus Anwendersicht als auch den Betrieb und die Übergabe abdeckt.
+## 2.2 Welche Anforderungen müssen erfüllt sein?
+Fachlich muss die Anwendung die zentralen Prozesse der Aufgabenverwaltung abdecken: Aufgaben erhalten Titel, Beschreibung, Fälligkeitsdatum, Priorität und Status; sie lassen sich bearbeiten und löschen sowie nach relevanten Kriterien sortieren und filtern. Eine Erinnerungslogik stellt sicher, dass fristgebundene Aufgaben rechtzeitig in den Fokus rücken, etwa einige Stunden oder Tage vor dem Fälligkeitstermin. Technisch basiert die Lösung auf einem C++‑Backend mit persistenter Speicherung und einer klar definierten Socket‑Kommunikation zum Frontend. Das Frontend wird mit HTML, CSS und JavaScript für die Web‑Nutzung umgesetzt und richtet sich ausschließlich an Browser‑Clients, nicht an alle Gerätetypen. 
+
+`Machen wir Tetsting? Wenn ja dann:
+Zur Qualitätssicherung gehören nachvollziehbare Versionierung, funktionale Tests der Kernlogik sowie eine kurze, praxisnahe Anleitung für Endanwenderinnen und Endanwender.`
+## 2.3 Welche Einschränkungen müssen berücksichtigt werden?
+Der Projektumfang konzentriert sich bewusst auf die Kernfunktionen einer ToDo-App. Eine komplexe Nutzerverwaltung ist nicht vorgesehen; die Lösung richtet sich wahlweise an Einzelnutzung oder eine einfache, lokale Nutzung. Externe Push-Dienste werden nicht eingebunden, sodass Erinnerungen server- oder klientenseitig innerhalb der Anwendung ausgelöst werden. Zudem bleibt der Technologie-Stack schlank: Das Backend entsteht in C++, das Frontend in HTML/CSS, ohne zusätzliche Frameworks, sofern diese nicht zwingend erforderlich sind. Zeit- und Budgetrahmen werden so eingehalten, ohne die Zuverlässigkeit zu beeinträchtigen.
+ 
