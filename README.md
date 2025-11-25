@@ -1,4 +1,4 @@
-# LF12_Project_TODO
+# LF12_Project_TO DO App
 Project in School for Projectmanagement 
 
 ## Projectgoal
