@@ -18,6 +18,7 @@ Zusätzlich ist die Fenstergröße statisch vorgegeben und darf nicht verändert
 Zur Qualitätssicherung gehören nachvollziehbare Versionierung, funktionale Tests der Kernlogik sowie eine kurze, praxisnahe Anleitung für Endanwender:innen.
 ## 2.3 Welche Einschränkungen müssen berücksichtigt werden?
 Der Projektumfang konzentriert sich bewusst auf die Kernfunktionen einer ToDo-App. Eine komplexe Nutzerverwaltung ist nicht vorgesehen; die Lösung richtet sich wahlweise an Einzelnutzung oder eine einfache, lokale Nutzung. Externe Push-Dienste werden nicht eingebunden, sodass Erinnerungen server- oder clientenseitig innerhalb der Anwendung ausgelöst werden. Zudem bleibt der Technologie-Stack schlank: Das Backend entsteht in C++, Javascript, das Frontend in HTML/CSS, ohne zusätzliche Frameworks, sofern diese nicht zwingend erforderlich sind. Zeit- und Budgetrahmen werden so eingehalten, ohne die Zuverlässigkeit zu beeinträchtigen.
+## 3. Projektstrukturplan entwickeln
 ## 3.1 Was ist für die Zielsetzung erforderlich
 Zur Umsetzung der To-Do-Applikation werden folgende Bereiche benötigt:
 - Konzeption: Festlegung der Anforderungen und der Systemarchitektur.
@@ -88,7 +89,7 @@ graph TD
 
     A --> H[7. Dokumentation]
 ```
-## 4
+## 4. Projektphasen mit Zeitplanung in Stunden
 | Phase                              | Inhalt                                            | Zeit (Stunden) |
 | ---------------------------------- | ------------------------------------------------- | -------------- |
 | **1. Planung & Analyse**           | Anforderungen, Architektur, Konzept               | **6 h**        |
