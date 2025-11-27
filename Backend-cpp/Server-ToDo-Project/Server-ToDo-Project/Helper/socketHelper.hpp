@@ -26,6 +26,18 @@ public:
         return true;
     }
 
+    std::string GetConfigValues(int choice) {
+
+        if (choice == 1)
+            return ip;
+
+        if (choice == 2)
+            return std::to_string(port);
+
+        if (choice != 1 || choice != 2)
+            return "Error! . . .";
+    }
+
     bool OpenSocket() {
         currentSocket = socket(AF_INET, SOCK_STREAM, 0);
         return currentSocket != INVALID_SOCKET;
@@ -72,6 +84,6 @@ public:
 
 private:
     SOCKET currentSocket = INVALID_SOCKET;
-    std::string ip = "0.0.0.0";
+    std::string ip = "127.0.0.1";
     int port = 8080;
 };

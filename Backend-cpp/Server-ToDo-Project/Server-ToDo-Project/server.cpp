@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Helper/socketHelper.hpp"
 
+#define serverConfigPath "DataStorage/Server-Config/serverConfig.cfg"
+
 SocketHelper* socketHelper = new SocketHelper;
 
 int main() {
@@ -8,7 +10,7 @@ int main() {
     WSAStartup(MAKEWORD(2, 2), &w);
 
     std::cout << "[*] Loading cfg...\n";
-    if (!socketHelper->LoadConfig("DataStorage/Server-Config/serverConfig.cfg")) {
+    if (!socketHelper->LoadConfig(serverConfigPath)) {
         std::cout << "[!] Failed config\n";
         return 1;
     }
@@ -22,7 +24,7 @@ int main() {
     std::cout << "[*] Listen\n";
     if (!socketHelper->Listen()) return 1;
 
-    std::cout << "[+] Server läuft auf: http://localhost:8080/\n";
+    std::cout << "[+] Server running on: " << socketHelper->GetConfigValues(1) << ":" << socketHelper->GetConfigValues(2) << "\n";
 
     while (true) {
         SOCKET client = socketHelper->AcceptClient();
@@ -33,10 +35,10 @@ int main() {
 
         //Building Routes here
         if (request.find("GET /hello") != std::string::npos) {
-            socketHelper->SendHTTPResponse(client, "Hallo vom C++ Server!");
+            socketHelper->SendHTTPResponse(client, "/hello- Route!");
         }
         else {
-            socketHelper->SendHTTPResponse(client, "Default Route: C++ Server");
+            socketHelper->SendHTTPResponse(client, "No Route Selected!");
         }
 
         closesocket(client);
