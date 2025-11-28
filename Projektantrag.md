@@ -73,13 +73,13 @@ gantt
     dateFormat YYYY-MM-DD
     
     section Phasen
-    1. Planung & Analyse :done, plan, 2025-11-28, 6d
-    2. Backend-Entwicklung :active, backend, after plan, 15d
-    3. Frontend-Entwicklung :crit, frontend, after plan, 10d
-    4. Integration & Schnittstelle :crit, integration, after backend frontend, 8d
-    5. Datenhaltung :datahalt, after integration, 3d
-    6. Tests & QS :testing, after datahalt, 6d
-    7. Dokumentation :documentation, after backend, 60d
+    1. Planung & Analyse :active, plan, 2025-11-28, 7d
+    2. Backend-Entwicklung :crit, backend, after plan, 19d
+    3. Frontend-Entwicklung :crit, frontend, after plan, 13d
+    4. Integration & Schnittstelle :crit, integration, after backend frontend, 13d
+    5. Datenhaltung :crit, after integration, 5d
+    6. Tests & QS :crit, after datahalt, 8d
+    7. Dokumentation :documentation, after plan, 47d
 ```
 ## 4. Projektphasen mit Zeitplanung in Stunden
 | Phase                              | Inhalt                                            | Zeit (Stunden) |
