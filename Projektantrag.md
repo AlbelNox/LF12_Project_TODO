@@ -68,19 +68,18 @@ Zur Umsetzung der To-Do-Applikation werden folgende Bereiche benötigt:
 - Projektbericht
 ## 3.4 Grafische oder tabellarische Darstellung
 ```mermaid
-graph TD
-    A["Projekt To-Do-App"] --> B["1. Planung"]
-    A --> C["2. Backend"]
-    C --> C1["Datenmodell"]
-    C --> C2["JSON"]
-    C --> C3["Socket"]
-    A --> D["3. Frontend"]
-    D --> D1["Oberfläche"]
-    D --> D2["Eingabemaske"]
-    A --> E["4. Integration"]
-    A --> F["5. Datenhaltung"]
-    A --> G["6. Test"]
-    A --> H["7. Dokumentation"]
+gantt
+    title Projekt To-Do-App - Zeitplanung
+    dateFormat YYYY-MM-DD
+    
+    section Phasen
+    1. Planung & Analyse :done, plan, 2025-11-28, 6d
+    2. Backend-Entwicklung :active, backend, after plan, 15d
+    3. Frontend-Entwicklung :crit, frontend, after plan, 10d
+    4. Integration & Schnittstelle :crit, integration, after backend frontend, 8d
+    5. Datenhaltung :datahalt, after integration, 3d
+    6. Tests & QS :testing, after datahalt, 6d
+    7. Dokumentation :documentation, after backend, 60d
 ```
 ## 4. Projektphasen mit Zeitplanung in Stunden
 | Phase                              | Inhalt                                            | Zeit (Stunden) |
