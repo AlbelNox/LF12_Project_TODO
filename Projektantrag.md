@@ -77,8 +77,8 @@ gantt
     2. Backend-Entwicklung :crit, backend, after plan, 19d
     3. Frontend-Entwicklung :crit, frontend, after plan, 13d
     4. Integration & Schnittstelle :crit, integration, after backend frontend, 13d
-    5. Datenhaltung :crit, after integration, 5d
-    6. Tests & QS :crit, after datahalt, 8d
+    5. Datenhaltung :crit, data,  after integration, 5d
+    6. Tests & QS :crit, after data, 8d
     7. Dokumentation :documentation, after plan, 47d
 ```
 ## 4. Projektphasen mit Zeitplanung in Stunden
