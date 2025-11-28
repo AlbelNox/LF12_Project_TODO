@@ -69,25 +69,18 @@ Zur Umsetzung der To-Do-Applikation werden folgende Bereiche benötigt:
 ## 3.4 Grafische oder tabellarische Darstellung
 ```mermaid
 graph TD
-
-    A[Projekt "To-Do-App"] --> B[1. Planung]
-
-    A --> C[2. Backend]
-        C --> C1[Datenmodell]
-        C --> C2[JSON]
-        C --> C3[Socket]
-
-    A --> D[3. Frontend]
-        D --> D1[Oberfläche]
-        D --> D2[Eingabemaske]
-
-    A --> E[4. Integration]
-
-    A --> F[5. Datenhaltung]
-
-    A --> G[6. Test]
-
-    A --> H[7. Dokumentation]
+    A["Projekt To-Do-App"] --> B["1. Planung"]
+    A --> C["2. Backend"]
+    C --> C1["Datenmodell"]
+    C --> C2["JSON"]
+    C --> C3["Socket"]
+    A --> D["3. Frontend"]
+    D --> D1["Oberfläche"]
+    D --> D2["Eingabemaske"]
+    A --> E["4. Integration"]
+    A --> F["5. Datenhaltung"]
+    A --> G["6. Test"]
+    A --> H["7. Dokumentation"]
 ```
 ## 4. Projektphasen mit Zeitplanung in Stunden
 | Phase                              | Inhalt                                            | Zeit (Stunden) |
