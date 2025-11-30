@@ -37,32 +37,32 @@ Zur Umsetzung der To-Do-Applikation werden folgende Bereiche benötigt:
 6. Test & Qualitätssicherung
 7. Dokumentation & Übergabe
 ## 3.3 Teilaufgaben
-1. Projektplanung
+### 1. Projektplanung
 - Anforderungen definieren
 - Soll-Konzept erstellen
 - Architektur auswählen
-2. Backend-Entwicklung
+### 2. Backend-Entwicklung
 - Datenmodell für Aufgaben erstellen
 - JSON-Verarbeitung implementieren
 - Socket-Server programmieren
 - Aufgabenlogik (Anlegen, Bearbeiten, Löschen, Sortieren)
-3. Frontend-Entwicklung
+### 3. Frontend-Entwicklung
 - Benutzeroberfläche gestalten
 - Eingabemasken erstellen
 - Aufgabenansicht programmieren
 - feste Fenstergröße absichern
-4. Integration / Schnittstelle
+### 4. Integration / Schnittstelle
 - JSON-Protokoll definieren
 - Kommunikation zwischen Frontend und Backend implementieren
 - Fehlerbehandlung
-5. Datenhaltung
+### 5. Datenhaltung
 - JSON-Datei erstellen
 - Speichern und Laden der Aufgaben
-6. Test & Qualitätssicherung
+### 6. Test & Qualitätssicherung
 - Funktions- und Integrationstests
 - Tests der Persistenz
 - Stabilität der Socket-Verbindung prüfen
-7. Dokumentation
+### 7. Dokumentation
 - Benutzerhandbuch
 - Technische Dokumentation
 - Projektbericht
