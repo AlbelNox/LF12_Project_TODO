@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import NavBar from "./components/NavBar/NavBar";
+import MainView from "./components/MainView/MainView";
+import { mockTodoLists } from "./mock/mocklists";
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function TodoAppLayout() {
+  const [selectedTodoListId, setSelectedTodoListId] = React.useState<number>(
+    mockTodoLists[0].id
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="flex h-screen bg-white">
+      {/* Sidebar */}
+      <NavBar
+        onSelectTodoList={setSelectedTodoListId}
+        todoLists={mockTodoLists}
+      />
 
-export default App
+      {/* Main Content Area */}
+      <MainView
+        todoList={
+          mockTodoLists.find((list) => list.id === selectedTodoListId) ??
+          mockTodoLists[0]
+        }
+      />
+    </div>
+  );
+}
