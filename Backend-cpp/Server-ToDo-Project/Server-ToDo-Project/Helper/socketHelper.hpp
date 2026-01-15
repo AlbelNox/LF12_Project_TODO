@@ -1,89 +1,229 @@
+
 #pragma once
 
-#include <WinSock2.h>
-#include <ws2tcpip.h>
 #include <string>
 #include <fstream>
-#include <sstream>
-#include <iostream>
+#include <mutex>
+#include <algorithm>
 
-#pragma comment(lib, "ws2_32.lib")
+#include <nlohmann/json.hpp>
 
-class SocketHelper {
-
+class JsonService {
 public:
+    using json = nlohmann::json;
 
-    bool LoadConfig(const std::string& path) {
-        std::ifstream file(path);
-        if (!file.is_open()) return false;
+    explicit JsonService(const std::string& jsonFilePath)
+        : path_(jsonFilePath)
+    {
+        EnsureFileExists();
+        Load();
+    }
 
-        std::string line;
-        while (std::getline(file, line)) {
-            if (line.rfind("IP=", 0) == 0) ip = line.substr(3);
-            if (line.rfind("Port=", 0) == 0) port = std::stoi(line.substr(5));
+    // ----------------------------
+    // Root-Infos
+    // ----------------------------
+    std::string GetListName() {
+        std::lock_guard<std::mutex> lock(mtx_);
+        return db_.value("name", std::string(""));
+    }
+
+    int GetListId() {
+        std::lock_guard<std::mutex> lock(mtx_);
+        return db_.value("id", 0);
+    }
+
+    bool SetListName(const std::string& name) {
+        std::lock_guard<std::mutex> lock(mtx_);
+        db_["name"] = name;
+        return SaveUnlocked();
+    }
+
+    bool SetListId(int id) {
+        std::lock_guard<std::mutex> lock(mtx_);
+        db_["id"] = id;
+        return SaveUnlocked();
+    }
+
+    // ----------------------------
+    // READ
+    // ----------------------------
+    json GetTodos() {
+        std::lock_guard<std::mutex> lock(mtx_);
+        return db_.value("todos", json::array());
+    }
+
+    json GetTodoById(int todoId) {
+        std::lock_guard<std::mutex> lock(mtx_);
+        for (const auto& t : db_["todos"]) {
+            if (t.value("id", -1) == todoId) return t;
+        }
+        return json(); // leer = nicht gefunden
+    }
+
+    // ----------------------------
+    // CREATE
+    // ----------------------------
+    json AddTodo(const std::string& title,
+        const std::string& priority,  // "LOW"|"MEDIUM"|"HIGH"
+        const std::string& dueDate)    // "YYYY-MM-DD"
+    {
+        std::lock_guard<std::mutex> lock(mtx_);
+
+        int newId = NextTodoIdUnlocked();
+
+        json todo = {
+            {"checked", false},
+            {"priority", NormalizePriority(priority)},
+            {"dueDate", dueDate},
+            {"title", title},
+            {"id", newId}
+        };
+
+        db_["todos"].push_back(todo);
+        SaveUnlocked();
+        return todo;
+    }
+
+    // ----------------------------
+    // UPDATE
+    // ----------------------------
+    bool SetChecked(int todoId, bool checked) {
+        std::lock_guard<std::mutex> lock(mtx_);
+
+        for (auto& t : db_["todos"]) {
+            if (t.value("id", -1) == todoId) {
+                t["checked"] = checked;
+                return SaveUnlocked();
+            }
+        }
+        return false;
+    }
+
+    bool UpdateTodo(int todoId,
+        const std::string& title,
+        const std::string& priority,
+        const std::string& dueDate,
+        bool checked)
+    {
+        std::lock_guard<std::mutex> lock(mtx_);
+
+        for (auto& t : db_["todos"]) {
+            if (t.value("id", -1) == todoId) {
+                t["title"] = title;
+                t["priority"] = NormalizePriority(priority);
+                t["dueDate"] = dueDate;
+                t["checked"] = checked;
+                return SaveUnlocked();
+            }
+        }
+        return false;
+    }
+
+    // ----------------------------
+    // DELETE
+    // ----------------------------
+    bool DeleteTodo(int todoId) {
+        std::lock_guard<std::mutex> lock(mtx_);
+
+        auto& arr = db_["todos"];
+        if (!arr.is_array()) return false;
+
+        for (size_t i = 0; i < arr.size(); ++i) {
+            if (arr[i].value("id", -1) == todoId) {
+                arr.erase(arr.begin() + static_cast<long long>(i));
+                return SaveUnlocked();
+            }
+        }
+        return false;
+    }
+
+    // ----------------------------
+    // Helpers für HTTP
+    // ----------------------------
+    static json TryParseJson(const std::string& s) {
+        try { return json::parse(s); }
+        catch (...) { return json(); }
+    }
+
+    static std::string ToPrettyString(const json& j) {
+        return j.dump(2);
+    }
+
+private:
+    std::string path_;
+    json db_;
+    std::mutex mtx_;
+
+    void EnsureFileExists() {
+        std::ifstream in(path_);
+        if (in.good()) return;
+
+        // Default-Struktur wie von dir vorgegeben
+        json def = {
+            {"name", ""},
+            {"id", 0},
+            {"todos", json::array()}
+        };
+
+        std::ofstream out(path_, std::ios::trunc);
+        out << def.dump(2);
+    }
+
+    bool Load() {
+        std::ifstream file(path_);
+        if (!file.is_open()) {
+            db_ = json{ {"name",""}, {"id",0}, {"todos", json::array()} };
+            return false;
+        }
+
+        try {
+            file >> db_;
+        }
+        catch (...) {
+            db_ = json{ {"name",""}, {"id",0}, {"todos", json::array()} };
+            SaveUnlocked();
+            return false;
+        }
+
+        // Safety: Keys sicherstellen
+        if (!db_.contains("name")) db_["name"] = "";
+        if (!db_.contains("id")) db_["id"] = 0;
+        if (!db_.contains("todos") || !db_["todos"].is_array())
+            db_["todos"] = json::array();
+
+        // Optional: falls checked als "false"/"true" String drin ist -> korrigieren
+        for (auto& t : db_["todos"]) {
+            if (t.contains("checked") && t["checked"].is_string()) {
+                std::string v = t["checked"].get<std::string>();
+                for (auto& c : v) c = (char)tolower((unsigned char)c);
+                t["checked"] = (v == "true");
+            }
         }
 
         return true;
     }
 
-    std::string GetConfigValues(int choice) {
-
-        if (choice == 1)
-            return ip;
-
-        if (choice == 2)
-            return std::to_string(port);
-
-        if (choice != 1 || choice != 2)
-            return "Error! . . .";
+    bool SaveUnlocked() {
+        std::ofstream file(path_, std::ios::trunc);
+        if (!file.is_open()) return false;
+        file << db_.dump(2);
+        return true;
     }
 
-    bool OpenSocket() {
-        currentSocket = socket(AF_INET, SOCK_STREAM, 0);
-        return currentSocket != INVALID_SOCKET;
+    int NextTodoIdUnlocked() const {
+        int maxId = 0;
+        if (db_.contains("todos") && db_["todos"].is_array()) {
+            for (const auto& t : db_["todos"]) {
+                maxId = std::max(maxId, t.value("id", 0));
+            }
+        }
+        return maxId + 1;
     }
 
-    bool BindFromConfig() {
-        sockaddr_in addr{};
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons(port);
-        inet_pton(AF_INET, ip.c_str(), &addr.sin_addr);
-
-        return bind(currentSocket, (sockaddr*)&addr, sizeof(addr)) != SOCKET_ERROR;
+    static std::string NormalizePriority(std::string p) {
+        // macht "low" -> "LOW"
+        for (auto& c : p) c = (char)toupper((unsigned char)c);
+        if (p == "LOW" || p == "MEDIUM" || p == "HIGH") return p;
+        return "MEDIUM"; // fallback
     }
-
-    bool Listen() {
-        return listen(currentSocket, SOMAXCONN) != SOCKET_ERROR;
-    }
-
-    SOCKET AcceptClient() {
-        return accept(currentSocket, nullptr, nullptr);
-    }
-
-    std::string ReadHTTPRequest(SOCKET client) {
-        char buffer[4096];
-        int bytes = recv(client, buffer, sizeof(buffer), 0);
-        if (bytes <= 0) return "";
-
-        return std::string(buffer, bytes);
-    }
-
-    void SendHTTPResponse(SOCKET client, const std::string& body) {
-        std::string header =
-            "HTTP/1.1 200 OK\r\n"
-            "Content-Type: text/plain\r\n"
-            "Access-Control-Allow-Origin: *\r\n"
-            "Content-Length: " + std::to_string(body.size()) + "\r\n"
-            "\r\n";
-
-        send(client, header.c_str(), (int)header.size(), 0);
-        send(client, body.c_str(), (int)body.size(), 0);
-    }
-
-    SOCKET GetSocket() { return currentSocket; }
-
-private:
-    SOCKET currentSocket = INVALID_SOCKET;
-    std::string ip = "127.0.0.1";
-    int port = 8080;
 };
