@@ -167,7 +167,6 @@ private:
             db_ = json{ {"name",""}, {"id",0}, {"todos", json::array()} };
             SaveUnlocked();
             return false;
-
         }
 
         if (!db_.contains("name")) db_["name"] = "";
