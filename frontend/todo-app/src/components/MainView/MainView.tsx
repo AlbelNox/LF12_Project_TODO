@@ -19,7 +19,6 @@ export default function MainView({ todoList }: MainViewProps) {
             <Button variant="outline">Filter</Button>
           </div>
 
-          {/* Table Header */}
           {todoList.todos.map((todo) => (
             <Card className="mb-4" key={todo.id}>
               <CardContent className="p-6">
