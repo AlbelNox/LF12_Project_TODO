@@ -34,8 +34,20 @@ int main() {
         std::cout << "[REQ]\n" << request << "\n";
 
         //Building Routes here
-        if (request.find("GET /hello") != std::string::npos) {
-            socketHelper->SendHTTPResponse(client, "/hello- Route!");
+        if (request.find("GET /lists") != std::string::npos) {
+            socketHelper->SendHTTPResponse(client, "/lists- Route!");
+        }
+        else if (request.find("GET /lists/create") != std::string::npos) {
+            socketHelper->SendHTTPResponse(client, "/lists/create- Route!");
+        }
+        else if (request.find("GET /list/" + request) != std::string::npos) {
+            socketHelper->SendHTTPResponse(client, "/lists/{id}- Route!");
+        }
+        else if (request.find("GET /list/" + request + "update") != std::string::npos) {
+            socketHelper->SendHTTPResponse(client, "/lists/{id}/update- Route!");
+        }
+        else if (request.find("GET /lists/" + request + "delete") != std::string::npos) {
+            socketHelper->SendHTTPResponse(client, "/lists/{id}/delete- Route!");
         }
         else {
             socketHelper->SendHTTPResponse(client, "No Route Selected!");
