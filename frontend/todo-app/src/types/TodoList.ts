@@ -4,7 +4,7 @@ export type TodoList = {
   todos: Todo[];
 };
 
-type Todo = {
+export type Todo = {
     checked: boolean;
     priority: 'low' | 'medium' | 'high';
     dueDate: string;
