@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Alltag",
+    "id": 32,
+    "todos": [
+      {
+        "id": 12,
+        "title": "Projektunterlagen fertigstellen",
+        "priority": "HIGH",
+        "dueDate": "2026-01-20",
+        "checked": false
+      },
+      {
+        "id": 13,
+        "title": "Einkaufen gehen",
+        "priority": "MID",
+        "dueDate": "2026-01-25",
+        "checked": true
+      }
+    ]
+  },
+  {
+    "name": "Kind1",
+    "id": 33,
+    "todos": [
+      {
+        "id": 20,
+        "title": "Meeting vorbereiten",
+        "priority": "HIGH",
+        "dueDate": "2026-01-23",
+        "checked": false
+      },
+      {
+        "id": 21,
+        "title": "Sport machen",
+        "priority": "LOW",
+        "dueDate": "2026-01-21",
+        "checked": true
+      }
+    ]
+  }
+]
+ 

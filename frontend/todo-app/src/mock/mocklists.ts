@@ -1,0 +1,128 @@
+import type { TodoList } from "@/types/TodoList";
+
+export const mockTodoLists: TodoList[] = [
+  {
+    id: 1,
+    name: "Meine Liste",
+    todos: [
+      {
+        checked: false,
+        priority: "high",
+        dueDate: "15.02.2026",
+        title: "Erste Aufgabe",
+        id: 1,
+      },
+      {
+        checked: false,
+        priority: "medium",
+        dueDate: "17.02.2026",
+        title: "Zweite Aufgabe",
+        id: 10,
+      },
+      {
+        checked: false,
+        priority: "low",
+        dueDate: "19.02.2026",
+        title: "Dritte Aufgabe",
+        id: 11,
+      },
+      {
+        checked: false,
+        priority: "high",
+        dueDate: "21.02.2026",
+        title: "Vierte Aufgabe",
+        id: 12,
+      },
+      {
+        checked: false,
+        priority: "medium",
+        dueDate: "23.02.2026",
+        title: "Fünfte Aufgabe",
+        id: 13,
+      },
+      {
+        checked: false,
+        priority: "low",
+        dueDate: "25.02.2026",
+        title: "Sechste Aufgabe",
+        id: 14,
+      },
+      {
+        checked: false,
+        priority: "high",
+        dueDate: "27.02.2026",
+        title: "Siebte Aufgabe",
+        id: 15,
+      },
+      {
+        checked: false,
+        priority: "medium",
+        dueDate: "01.03.2026",
+        title: "Achte Aufgabe",
+        id: 16,
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Zweite Liste",
+    todos: [
+      {
+        checked: false,
+        priority: "medium",
+        dueDate: "03.02.2026",
+        title: "Zweite Aufgabe",
+        id: 2,
+      },
+      {
+        checked: false,
+        priority: "low",
+        dueDate: "05.02.2026",
+        title: "Dritte Aufgabe",
+        id: 3,
+      },
+      {
+        checked: false,
+        priority: "high",
+        dueDate: "10.02.2026",
+        title: "Vierte Aufgabe",
+        id: 4,
+      },
+      {
+        checked: false,
+        priority: "medium",
+        dueDate: "12.02.2026",
+        title: "Fünfte Aufgabe",
+        id: 5,
+      },
+      {
+        checked: false,
+        priority: "low",
+        dueDate: "15.02.2026",
+        title: "Sechste Aufgabe",
+        id: 6,
+      },
+      {
+        checked: false,
+        priority: "high",
+        dueDate: "18.02.2026",
+        title: "Siebte Aufgabe",
+        id: 7,
+      },
+      {
+        checked: false,
+        priority: "medium",
+        dueDate: "20.02.2026",
+        title: "Achte Aufgabe",
+        id: 8,
+      },
+      {
+        checked: false,
+        priority: "low",
+        dueDate: "22.02.2026",
+        title: "Neunte Aufgabe",
+        id: 9,
+      },
+    ],
+  },
+];
