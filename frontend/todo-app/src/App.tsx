@@ -3,17 +3,29 @@ import { mockTodoLists } from "./mock/mocklists";
 import React from "react";
 import TodoListView from "./components/TodolistView/TodoListView";
 import TasksDueSoon from "./components/ExpiringTodos/TasksDueSoon";
+import { localStorageService } from "./services/localStorageService";
 
 export default function TodoAppLayout() {
+  // Lade Listen aus localStorage oder verwende Fallback
+  const getInitialLists = () => {
+    const storedLists = localStorageService.loadTodoLists();
+    return storedLists || mockTodoLists;
+  };
+
   const [selectedTodoListId, setSelectedTodoListId] = React.useState<number>(
-    mockTodoLists[0].id
+    getInitialLists()[0].id
   );
 
   const [currentView, setCurrentView] = React.useState<
     "taskDueDate" | "todoListView"
   >("todoListView");
 
-  const [todoLists, setTodoLists] = React.useState(mockTodoLists);
+  const [todoLists, setTodoLists] = React.useState(getInitialLists());
+
+  // Speichere Listen automatisch im localStorage, wenn sie sich ändern
+  React.useEffect(() => {
+    localStorageService.saveTodoLists(todoLists);
+  }, [todoLists]);
 
   const handleDeleteTodoList = () => {
     console.log("Deleting todo list with ID:", selectedTodoListId);
